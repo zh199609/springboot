@@ -1,5 +1,6 @@
 package com.zl.controller;
 
+import com.zl.exception.UserNotExistsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,13 @@ public class HelloController {
     public String success(Map<String,Object> map) {
         map.put("hello","spring <br/>boot  zl");
         map.put("users", Arrays.asList("001","002","003"));
+        return "success";
+    }
+    @RequestMapping("/hello")
+    public String hello() {
+        if(1==1){
+            throw new UserNotExistsException();
+        }
         return "success";
     }
 }
