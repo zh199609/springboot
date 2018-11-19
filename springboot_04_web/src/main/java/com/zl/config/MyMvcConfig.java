@@ -1,11 +1,11 @@
 package com.zl.config;
 
-import com.zl.component.LoginHandlerInterceptor;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -47,6 +47,17 @@ public class MyMvcConfig implements WebMvcConfigurer {
     @Override//Springboot已经做了静态资源映射
     public void addInterceptors(InterceptorRegistry registry) {
         //registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns("/", "/user/login","/asserts/**");
+    }
+
+    /**
+     * 嵌入式容器定制器
+     * @return
+     */
+    //@Bean
+    public ConfigurableServletWebServerFactory configurableServletWebServerFactory(){
+    	TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+    	//tomcat.setPort(8088);
+    	return tomcat;
     }
 
 }
