@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    druid:
+      username: root
+      password: zh199609
+      url: jdbc:mysql://47.100.27.100:3306/jdbc
