@@ -29,11 +29,19 @@ public class EmployeeService {
 	 * unless:否定缓存 当unless指定的条件为true  不缓存 可以获取到结果进行判断 #result == null 
 	 * sync:是否使用异步模式
 	 *
+	 * 如果设置sync=true，
+	 *  如果缓存中没有数据，多个线程同时访问这个方法，则只有一个方法会执行到方法，其它方法需要等待
+	 *  如果缓存中已经有数据，则多个线程可以同时从缓存中获取数据
+	 * @param id
+	 * @return
+	 *
 	 * 原理： 1.自动配置类:CacheAutoConfiguration 多个缓存配置类 2.哪个配置类生效
 	 * SimpleCacheConfiguration->给容器中注册了一个CacheManager   ConcurrentMapCacheManager
 	 * 3.
 	 */
-	@Cacheable(value = "emp")
+
+
+	@Cacheable(value = "emp",cacheManager = "cacheManager")
 	public Employee getEmpById(Integer id) {
 		System.err.println("查询：" + id + "号员工");
 		return employeeMapper.getEmpById(id);
