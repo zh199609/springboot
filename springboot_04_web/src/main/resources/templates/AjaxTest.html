@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input id="name" type="text"/>
+    <input id="psw" type="text"/>
+    <input type="button" value="提交数据" id="btn">
+</body>
+<script type="text/javascript" src="/asserts/js/jquery-3.3.1.min.js"></script>
+<script>
+
+    $("#btn").click(function (e) {
+        console.log(e);
+        var id = $("#name").val();
+        var departmentName = $("#psw").val();
+        console.log({id:id,departmentName:departmentName})
+        $.ajax({
+            type:'post',
+            url:'/ajaxTest',
+            //dataType:'json',
+            contentType:'application/json;charset=utf-8',
+            data:JSON.stringify({id:id,departmentName:departmentName}),
+            success:function(data){
+                console.log("响应数据："+data)
+            }
+        });
+
+    });
+
+
+</script>
+</html>
