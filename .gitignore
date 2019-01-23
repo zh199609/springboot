@@ -1,3 +1,24 @@
 /.metadata/
 /.recommenders/
 /**/target/
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+/target/
+
+# eclipse
+.settings/
+.classpath
+.project
+logs/
+
+# idea
+.idea/
+*.iml
+/bin/
+
+*velocity.log*
+
