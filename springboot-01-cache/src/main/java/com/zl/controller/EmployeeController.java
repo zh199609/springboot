@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zl.entity.Employee;
 import com.zl.service.EmployeeService;
 
-@CacheConfig(cacheNames="emp")//类指定缓存配置
+
 @RestController
 public class EmployeeController {
 

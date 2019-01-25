@@ -20,11 +20,13 @@
         $.ajax({
             type:'post',
             url:'/ajaxTest',
-            //dataType:'json',
+            dataType:'text',
             contentType:'application/json;charset=utf-8',
             data:JSON.stringify({id:id,departmentName:departmentName}),
             success:function(data){
                 console.log("响应数据："+data)
+                console.log("响应数据："+JSON.stringify(data))
+                console.log("响应数据类型："+typeof data)
             }
         });
 

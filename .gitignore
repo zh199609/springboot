@@ -16,6 +16,7 @@
 logs/
 
 # idea
+/**/.idea/
 .idea/
 *.iml
 /bin/
