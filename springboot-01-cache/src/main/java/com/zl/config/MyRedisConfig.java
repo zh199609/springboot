@@ -5,6 +5,9 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,24 +25,45 @@ import org.springframework.util.Assert;
 
 @Configuration
 public class MyRedisConfig {
-	/*
-	 * @Bean public RedisTemplate<Object, Object> redisTemplate(
-	 * RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {
-	 * RedisTemplate<Object, Object> template = new RedisTemplate<>();
-	 * template.setConnectionFactory(redisConnectionFactory);
-	 * Jackson2JsonRedisSerializer<Object> serializer = new
-	 * Jackson2JsonRedisSerializer<>(Object.class); //
-	 * 设置值（value）的序列化采用FastJsonRedisSerializer。
-	 * template.setValueSerializer(serializer);
-	 * template.setHashValueSerializer(serializer); //
-	 * 设置键（key）的序列化采用StringRedisSerializer。 template.setKeySerializer(new
-	 * StringRedisSerializer()); template.setHashKeySerializer(new
-	 * StringRedisSerializer()); template.setDefaultSerializer(serializer);
-	 * template.afterPropertiesSet(); System.err.println("序列化完成？？"); return
-	 * template; }
-	 */
+    /*
+     * @Bean public RedisTemplate<Object, Object> redisTemplate(
+     * RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {
+     * RedisTemplate<Object, Object> template = new RedisTemplate<>();
+     * template.setConnectionFactory(redisConnectionFactory);
+     * Jackson2JsonRedisSerializer<Object> serializer = new
+     * Jackson2JsonRedisSerializer<>(Object.class); //
+     * 设置值（value）的序列化采用FastJsonRedisSerializer。
+     * template.setValueSerializer(serializer);
+     * template.setHashValueSerializer(serializer); //
+     * 设置键（key）的序列化采用StringRedisSerializer。 template.setKeySerializer(new
+     * StringRedisSerializer()); template.setHashKeySerializer(new
+     * StringRedisSerializer()); template.setDefaultSerializer(serializer);
+     * template.afterPropertiesSet(); System.err.println("序列化完成？？"); return
+     * template; }
+     */
 
-	@Bean
+
+    @Bean
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<Object, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+
+        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        serializer.setObjectMapper(mapper);
+        template.setValueSerializer(serializer);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.afterPropertiesSet();
+        return template;
+    }
+
+
+
+
+	/*@Bean
 	public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory)
 			throws UnknownHostException {
 		RedisTemplate<Object, Object> template = new RedisTemplate<>();
@@ -53,10 +77,10 @@ public class MyRedisConfig {
 		//template.setHashKeySerializer(new StringRedisSerializer());
 		template.setDefaultSerializer(serializer);
 		return template;
-	}
-	
-	/*@Bean
-	public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+	}*/
+
+    /*@Bean
+    public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
         redisCacheConfiguration.serializeValuesWith(SerializationPair
@@ -65,8 +89,8 @@ public class MyRedisConfig {
         RedisCacheManager cacheManager = cacheManagerBuilder.build();
         Map<String, RedisCacheConfiguration> cacheConfigurations = cacheManager.getCacheConfigurations();
         return cacheManager;
-	}*/
-	@Bean
+    }*/
+    //@Bean
     public RedisCacheConfiguration redisCacheConfiguration() {
         //使用Jackson2JsonRedisSerializer反序列化时的转换异常
         Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer<>(Object.class);

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @Description
  * @Date
  */
-@Configuration
+//@Configuration
 public class TestTask {
 
     @Autowired
