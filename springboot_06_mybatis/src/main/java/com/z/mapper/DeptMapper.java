@@ -17,7 +17,7 @@ public interface DeptMapper {
     List<Deptment> getDepts();
 
     @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
-    @Insert("insert into deptment(deptment_name) values(#{deptmentName})")
+    @Insert("insert into deptment(id,deptment_name) values(#{id},#{deptmentName})")
     int insertDept(Deptment deptment);
 
     @Update("update deptment set deptment_name = #{deptmentName} where id = #{id}")

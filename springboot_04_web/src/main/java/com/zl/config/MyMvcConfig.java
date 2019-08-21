@@ -1,5 +1,6 @@
 package com.zl.config;
 
+import com.zl.component.LoginHandlerInterceptor;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +32,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
                 registry.addViewController("/main").setViewName("dashboard");
             }
 
-            /*@Override
+           /* @Override
             public void addInterceptors(InterceptorRegistry registry) {
                 registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns("/", "/user/login");
             }*/
@@ -46,7 +47,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     @Override//Springboot已经做了静态资源映射
     public void addInterceptors(InterceptorRegistry registry) {
-        //registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns("/", "/user/login","/asserts/**");
+        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns("/", "/user/login","/asserts/**");
     }
 
     /**
