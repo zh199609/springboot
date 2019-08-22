@@ -17,7 +17,9 @@ public class AjaxTest {
     }
 
     @RequestMapping(value = "/ajax")
+    @ResponseBody
     public String joinTest(){
+        System.out.println("11111111111111111");
         return "AjaxTest";
     }
 
