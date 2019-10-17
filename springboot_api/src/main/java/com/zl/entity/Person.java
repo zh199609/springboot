@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NonNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -23,10 +24,11 @@ import java.util.Date;
 public class Person implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long id;
-    @NotNull(message = "用户名不能为空")
+    @NotBlank(message = "用户名不能为空")
     private String name;
     private Integer age;
     @TableField(condition = SqlCondition.LIKE)
+    @NotBlank(message = "邮箱不能为空")
     private String email;
     @TableField(fill = FieldFill.INSERT)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

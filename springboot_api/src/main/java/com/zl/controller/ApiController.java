@@ -10,11 +10,13 @@ import com.zl.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @ClassName: ApiController
@@ -33,7 +35,8 @@ public class ApiController {
     @ResponseBody
     public Person addEmp(@Valid @RequestBody Person person, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println("error:" + bindingResult.getFieldErrors());
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            fieldErrors.forEach(fieldError -> System.out.println(fieldError.getDefaultMessage()));
         }
         try {
             personService.addPerson(person);
