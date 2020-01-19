@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="singleFrom" enctype="multipart/form-data">
+    <input id="userName" type="text" name="userName" value="111"/>
+    <input type="file" name="file" id="file"/>
+    <input type="button" value="提交数据" id="btn">
+</form>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+
+  $("#btn").click(function (e) {
+
+    var oMyForm = new FormData();
+    oMyForm.append("userName", "userName");
+    oMyForm.append("file", $('#file')[0].files[0]);
+    console.log(typeof $('#file')[0].files[0])
+    $.ajax({
+      type: 'post',
+      url: '/data',
+      processData: false,
+      contentType: false,
+      async: false,
+      data: oMyForm,
+      success: function (data) {
+        console.log("响应数据：" + JSON.stringify(data))
+      }
+    });
+
+  });
+
+
+</script>
+</html>
