@@ -24,5 +24,5 @@ public interface EmployeeMapper {
 	void insertEmp(Employee employee);
 	
 	@Select("select * from employee where lastName = #{name}")
-	Employee getEmpByLasyName(String name);
+	Employee getEmpByLastName(String name);
 }

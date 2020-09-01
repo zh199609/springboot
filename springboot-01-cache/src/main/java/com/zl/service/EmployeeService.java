@@ -1,5 +1,7 @@
 package com.zl.service;
 
+import com.zl.entity.Employee;
+import com.zl.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -7,10 +9,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.zl.entity.Employee;
-import com.zl.mapper.EmployeeMapper;
 
 @CacheConfig(cacheNames = "emp")//类指定缓存配置
 @Service
@@ -47,7 +45,6 @@ public class EmployeeService {
     public Employee getEmpById(Integer id) {
         System.err.println("查询：" + id + "号员工");
         return employeeMapper.getEmpById(id);
-        //
     }
 
     @Cacheable(cacheNames = "emp", keyGenerator = "myKeyGenerator", condition = "#id > 1")
@@ -78,7 +75,7 @@ public class EmployeeService {
     @CacheEvict(cacheNames = "emp", key = "#id")
     public void deleteEmp(Integer id) {
         System.err.println("删除员工：" + id);
-        //employeeMapper.deleteEmpById(id);
+        employeeMapper.deleteEmpById(id);
     }
 
     /**
@@ -96,7 +93,7 @@ public class EmployeeService {
 
     )
     public Employee getEmpByLastName(String name) {
-        return employeeMapper.getEmpByLasyName(name);
+        return employeeMapper.getEmpByLastName(name);
     }
 
 }
