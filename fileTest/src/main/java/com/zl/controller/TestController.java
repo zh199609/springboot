@@ -19,6 +19,13 @@ public class TestController {
         return "fileTest";
     }
 
+    @RequestMapping(value = "/fileUpload")
+    @ResponseBody
+    public String fileUpload(@RequestParam("multipartFile") MultipartFile file) {
+        System.out.println(file.getSize());
+        return "asd56g4a6sd4g";
+    }
+
 
     @RequestMapping(value = "/data")
     @ResponseBody

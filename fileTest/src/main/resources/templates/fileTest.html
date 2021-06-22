@@ -5,14 +5,57 @@
     <title>Title</title>
 </head>
 <body>
-<form id="singleFrom" enctype="multipart/form-data">
+
+<label for="attachmentFile" class="btn btn-default upload-image">上传</label>
+<form class="picture-uploader concealed" style="display: none;" method="post" target="framePictureUploadResponse" enctype="multipart/form-data"
+      th:action="@{/fileUpload}">
+    <input id="attachmentFile" type="file" name="multipartFile" accept="image/*"/>
+</form>
+<iframe  style="display: none" id="framePictureUploadResponse" name="framePictureUploadResponse" class="concealed"></iframe>
+<!--<form id="singleFrom" enctype="multipart/form-data">
     <input id="userName" type="text" name="userName" value="111"/>
     <input type="file" name="file" id="file"/>
     <input type="button" value="提交数据" id="btn">
-</form>
+</form>-->
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
+
+
+    $('.upload-image').click(function (e) {
+        uploadPicture();
+    });
+
+
+    function uploadPicture() {
+        var form = $('.picture-uploader');
+        var input = form.children('input[type=file]');
+        var frame = $('#framePictureUploadResponse');
+        var inputDom = $('<input id="attachmentFile" type="file" name="multipartFile" accept="image/*" />');
+        input.off('change').on('change', function (e) {
+            var filename = input.val();
+            filename = filename.substring(filename.lastIndexOf("\\"));
+            var suffix = filename.substring(filename.lastIndexOf('.') + 1).toLowerCase();
+            var pictureSuffix = ['bmp', 'gif', 'jpeg', 'psd', 'png', 'jpg'];
+            if ($.inArray(suffix, pictureSuffix) < 0) {
+                window.$.alerts.systemAlert('图片格式错误');
+                form.find('input').remove();
+                form.append(inputDom);
+                return false;
+            }
+            if (e.target.value.length > 0) {
+                form.submit();
+                form.find('input').remove();
+                form.append(inputDom);
+            }
+        });
+        frame.off('load').on('load', function (e) {
+            var response = $(e.target).contents().find('body').html();
+            alert(response)
+            frame.off('load');
+        });
+    }
+
 
   $("#btn").click(function (e) {
 
